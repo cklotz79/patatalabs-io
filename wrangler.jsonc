@@ -2,7 +2,7 @@
   // Sitio puramente estático: no hay script de Worker, sólo assets.
   // Todo lo que se sirve vive en public/; lo que está fuera —este
   // archivo, el README, .gitignore— nunca llega al navegador.
-  "name": "patatalabs-io",
+  "name": "patatalabs",
   "compatibility_date": "2026-07-25",
   "assets": {
     "directory": "./public"
