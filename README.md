@@ -4,19 +4,23 @@ Sitio de [Patata Labs](https://patatalabs.io). Una sola página, estática, sin
 dependencias ni paso de build.
 
 ```
-index.html
-css/  tokens.css · base.css · components.css · styles.css   sistema de diseño
-      site.css                                              maquetación y movimiento
-js/   site.js                                               sesión de terminal e idioma
-      constellation.js                                      sin usar
+wrangler.jsonc                                              configuración de Workers
+public/                                                     lo único que se sirve
+  index.html
+  _headers                                                  seguridad y caché
+  css/  tokens.css · base.css · components.css · styles.css sistema de diseño
+        site.css                                            maquetación y movimiento
+  js/   site.js                                             sesión de terminal e idioma
+        constellation.js                                    sin usar
 ```
 
 ## Desarrollo
 
-No hace falta instalar nada. Abrir `index.html` en el navegador, o servirlo:
+No hace falta instalar nada. Abrir `public/index.html` en el navegador, o
+servirlo:
 
 ```bash
-python3 -m http.server 8000
+python3 -m http.server 8000 --directory public
 ```
 
 Requiere salida a `fonts.googleapis.com` para Schibsted Grotesk, JetBrains Mono
@@ -24,17 +28,19 @@ y Fragment Mono.
 
 ## Despliegue
 
-Cloudflare Pages, conectado a este repositorio. Cada push a `main` publica.
+Cloudflare Workers con static assets, conectado a este repositorio mediante
+Workers Builds. Cada push a `main` publica.
 
-| Ajuste | Valor |
-| --- | --- |
-| Framework preset | None |
-| Build command | *(vacío)* |
-| Build output directory | `/` |
-| Root directory | `/` |
+La configuración está en `wrangler.jsonc`: no hay script de Worker ni comando de
+build, sólo `assets.directory` apuntando a `public/`. `public/_headers` define la
+política de seguridad de contenido y la caché; Workers lo interpreta y no lo
+sirve como archivo.
 
-No hay comando de build ni directorio de salida: el repositorio se sirve tal
-cual. `_headers` define la política de seguridad de contenido y la caché.
+Despliegue manual, si hiciera falta:
+
+```bash
+npx wrangler deploy
+```
 
 ## Idioma
 
