@@ -1,0 +1,13 @@
+/* Patata Labs — sistema de diseño v1.0
+   Punto de entrada único. Enlaza sólo este archivo.
+
+   @import "tokens"      variables de color, escala, tipografía, trazo
+   @import "base"        reset, escala tipográfica, marca, estructura
+   @import "components"  botones, campos, estados, tarjeta, tabla,
+                         navegación, aviso, terminal, imagen */
+
+@import url("https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;800&family=JetBrains+Mono:wght@400;500&family=Fragment+Mono&display=swap");
+
+@import "tokens.css";
+@import "base.css";
+@import "components.css";

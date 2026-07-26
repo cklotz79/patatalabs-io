@@ -1,0 +1,423 @@
+/* Patata Labs — componentes
+   Todo componente se dibuja con filetes de 1px sobre papel.
+   La única superficie negra es el terminal y el pie de marca. */
+
+/* ── Botones ────────────────────────────────────────────────
+   Alto 44px mínimo. Hover: invierte tinta/papel. */
+
+.pl-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: var(--pl-hit);
+  padding: 13px 20px;
+  border: var(--pl-hairline) solid transparent;
+  border-radius: var(--pl-radius);
+  background: none;
+  font-family: var(--pl-font-mono);
+  font-size: 12px;
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background var(--pl-transition), color var(--pl-transition);
+}
+
+.pl-btn--primary {
+  background: var(--pl-ink);
+  color: var(--pl-on-ink);
+  border-color: var(--pl-ink);
+}
+
+.pl-btn--primary:hover {
+  background: var(--pl-paper);
+  color: var(--pl-ink);
+}
+
+.pl-btn--secondary {
+  border-color: var(--pl-ink);
+  color: var(--pl-ink);
+}
+
+.pl-btn--secondary:hover {
+  background: var(--pl-ink);
+  color: var(--pl-on-ink);
+}
+
+.pl-btn--tertiary {
+  padding: 13px 4px;
+  border-bottom: var(--pl-hairline) solid var(--pl-ink);
+  color: var(--pl-ink);
+}
+
+.pl-btn--tertiary:hover {
+  color: var(--pl-ink-soft);
+  border-bottom-color: var(--pl-ink-soft);
+}
+
+.pl-btn[aria-disabled="true"],
+.pl-btn:disabled {
+  color: var(--pl-ink-soft);
+  border-color: var(--pl-line);
+  background: none;
+  pointer-events: none;
+}
+
+/* Botón sobre tinta (captación) */
+.pl-ink-surface .pl-btn--secondary {
+  border-color: var(--pl-on-ink-faint);
+  color: var(--pl-on-ink);
+}
+
+.pl-ink-surface .pl-btn--secondary:hover {
+  background: var(--pl-on-ink);
+  color: var(--pl-ink);
+}
+
+/* ── Campos ─────────────────────────────────────────────────
+   Foco: borde tinta + cursor señal. */
+
+.pl-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pl-field__label {
+  font-family: var(--pl-font-mono);
+  font-size: 10.5px;
+  color: var(--pl-ink-soft);
+}
+
+.pl-input {
+  min-height: var(--pl-hit);
+  padding: 13px 14px;
+  border: var(--pl-border);
+  border-radius: var(--pl-radius);
+  background: var(--pl-paper-raised);
+  color: var(--pl-ink);
+  font-family: var(--pl-font-mono);
+  font-size: 12px;
+  caret-color: var(--pl-signal);
+  transition: border-color var(--pl-transition);
+}
+
+.pl-input::placeholder {
+  color: var(--pl-ink-soft);
+}
+
+.pl-input:focus {
+  outline: none;
+  border-color: var(--pl-ink);
+}
+
+/* Réplica estática del estado de foco, para especímenes */
+.pl-input--focus {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  border-color: var(--pl-ink);
+}
+
+.pl-field__help {
+  font-family: var(--pl-font-note);
+  font-size: 10.5px;
+  line-height: var(--pl-leading-note);
+  color: var(--pl-ink-soft);
+}
+
+/* ── Estados ────────────────────────────────────────────────
+   Un solo estado con señal por vista. */
+
+.pl-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 11px;
+  border: var(--pl-border);
+  border-radius: var(--pl-radius);
+  font-family: var(--pl-font-mono);
+  font-size: 11px;
+  line-height: 1;
+  color: var(--pl-ink);
+}
+
+.pl-tag--quiet {
+  color: var(--pl-ink-soft);
+}
+
+.pl-tag--ink {
+  background: var(--pl-ink);
+  border-color: var(--pl-ink);
+  color: var(--pl-on-ink);
+}
+
+.pl-tag--queued {
+  border-style: dashed;
+  border-color: var(--pl-ink-soft);
+  color: var(--pl-ink-soft);
+}
+
+.pl-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--pl-signal);
+  flex: none;
+}
+
+.pl-dot--hollow {
+  background: none;
+  border: var(--pl-hairline) solid var(--pl-ink-soft);
+}
+
+/* ── Tarjeta ────────────────────────────────────────────────
+   Borde sobre papel, nunca elevación. */
+
+.pl-card {
+  display: flex;
+  flex-direction: column;
+  border: var(--pl-border);
+  background: var(--pl-paper-raised);
+}
+
+.pl-card__body {
+  padding: var(--pl-space-2);
+  display: flex;
+  flex-direction: column;
+  gap: var(--pl-space-1);
+}
+
+.pl-card__index {
+  font-family: var(--pl-font-mono);
+  font-size: 10.5px;
+  color: var(--pl-ink-soft);
+}
+
+.pl-card__title {
+  font-size: 19px;
+  font-weight: var(--pl-weight-bold);
+  letter-spacing: var(--pl-tracking-tight);
+  line-height: 1.1;
+}
+
+.pl-card__text {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--pl-ink-soft);
+}
+
+.pl-card__foot {
+  margin-top: auto;
+  padding: 12px var(--pl-space-2);
+  border-top: var(--pl-border);
+  font-family: var(--pl-font-mono);
+  font-size: 11px;
+}
+
+/* ── Tabla de datos ─────────────────────────────────────────
+   Cabecera bajo filete de tinta; filas separadas por filete. */
+
+.pl-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-top: var(--pl-hairline) solid var(--pl-ink);
+  font-family: var(--pl-font-mono);
+  font-size: 12px;
+  text-align: left;
+}
+
+.pl-table th {
+  padding: 10px 0;
+  border-bottom: var(--pl-border);
+  font-weight: var(--pl-weight-regular);
+  font-size: 11px;
+  color: var(--pl-ink-soft);
+}
+
+.pl-table td {
+  padding: 11px 0;
+  border-bottom: var(--pl-border);
+}
+
+.pl-table tr:last-child td {
+  border-bottom: 0;
+}
+
+.pl-table th:not(:first-child),
+.pl-table td:not(:first-child) {
+  text-align: right;
+}
+
+/* Variante de documento impreso: mismo dibujo, cuerpo de folio */
+.pl-table--compact {
+  border-top: 0;
+}
+
+.pl-table--compact th,
+.pl-table--compact td {
+  font-size: 8px;
+  padding: 5px 0;
+}
+
+/* ── Navegación ─────────────────────────────────────────── */
+
+.pl-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--pl-space-3);
+  padding-bottom: 12px;
+  border-bottom: var(--pl-border);
+}
+
+.pl-nav__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--pl-space-2);
+  font-family: var(--pl-font-mono);
+  font-size: 11px;
+  color: var(--pl-ink-soft);
+}
+
+.pl-nav__links a {
+  color: var(--pl-ink-soft);
+  text-decoration: none;
+  padding-bottom: 2px;
+}
+
+.pl-nav__links a:hover {
+  color: var(--pl-ink);
+}
+
+.pl-nav__links a[aria-current] {
+  color: var(--pl-ink);
+  border-bottom: var(--pl-hairline) solid var(--pl-ink);
+}
+
+.pl-pager {
+  display: flex;
+  gap: 18px;
+  font-family: var(--pl-font-mono);
+  font-size: 11px;
+  color: var(--pl-ink-soft);
+}
+
+.pl-pager__next {
+  margin-left: auto;
+}
+
+/* ── Aviso inline ───────────────────────────────────────── */
+
+.pl-notice {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 14px;
+  border: var(--pl-border-ink);
+}
+
+.pl-notice__dot {
+  width: 7px;
+  height: 7px;
+  margin-top: 5px;
+  background: var(--pl-signal);
+  flex: none;
+}
+
+.pl-notice__title {
+  font-size: 14px;
+  font-weight: var(--pl-weight-medium);
+}
+
+.pl-notice__text {
+  font-family: var(--pl-font-mono);
+  font-size: 11px;
+  line-height: 1.6;
+  color: var(--pl-ink-soft);
+}
+
+/* ── Terminal ───────────────────────────────────────────── */
+
+.pl-terminal {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: var(--pl-space-2);
+  background: var(--pl-ink);
+  font-family: var(--pl-font-mono);
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: var(--pl-on-ink);
+}
+
+.pl-terminal__prompt {
+  color: rgba(248, 246, 241, 0.55);
+}
+
+.pl-terminal__ok {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--pl-signal);
+}
+
+/* ── Imagen ─────────────────────────────────────────────────
+   Sin filtros, sin bordes redondeados. */
+
+.pl-figure {
+  display: flex;
+  align-items: flex-end;
+  padding: 12px;
+  aspect-ratio: 16 / 10;
+  background: var(--pl-line);
+}
+
+.pl-figure__caption {
+  font-family: var(--pl-font-mono);
+  font-size: 10.5px;
+  color: var(--pl-ink-soft);
+}
+
+/* ── Módulo de especímenes (chasis del styleguide) ───────── */
+
+.pl-module {
+  background: var(--pl-paper);
+  border: var(--pl-border);
+}
+
+.pl-module__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--pl-space-2);
+  padding: var(--pl-space-2) 22px;
+}
+
+.pl-module__name {
+  font-size: 15px;
+  font-weight: var(--pl-weight-bold);
+  letter-spacing: var(--pl-tracking-flat);
+}
+
+.pl-module__body {
+  border-top: var(--pl-border);
+}
+
+.pl-module__foot {
+  padding: 14px 22px;
+  border-top: var(--pl-border);
+  font-family: var(--pl-font-note);
+  font-size: 11px;
+  line-height: 1.6;
+  color: var(--pl-ink-soft);
+}
+
+.pl-cell {
+  padding: var(--pl-space-3) 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.pl-cell + .pl-cell {
+  border-left: var(--pl-border);
+}

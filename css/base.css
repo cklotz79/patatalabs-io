@@ -1,0 +1,186 @@
+/* Patata Labs — base
+   Reset mínimo y escala tipográfica. Nada centrado salvo el sello
+   en piezas cuadradas. */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--pl-canvas);
+  color: var(--pl-ink);
+  font-family: var(--pl-font-sans);
+  font-weight: var(--pl-weight-regular);
+  font-size: var(--pl-size-body);
+  line-height: var(--pl-leading-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote {
+  margin: 0;
+}
+
+img,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: var(--pl-ink);
+  text-decoration-thickness: var(--pl-hairline);
+  text-underline-offset: 3px;
+}
+
+a:hover {
+  color: var(--pl-ink-soft);
+}
+
+:focus-visible {
+  outline: var(--pl-hairline) solid var(--pl-ink);
+  outline-offset: 2px;
+}
+
+/* ── Escala tipográfica ─────────────────────────────────── */
+
+.pl-display {
+  font-size: var(--pl-size-display);
+  font-weight: var(--pl-weight-bold);
+  letter-spacing: var(--pl-tracking-display);
+  line-height: var(--pl-leading-display);
+  text-wrap: pretty;
+}
+
+.pl-title {
+  font-size: var(--pl-size-title);
+  font-weight: var(--pl-weight-bold);
+  letter-spacing: var(--pl-tracking-title);
+  line-height: var(--pl-leading-title);
+  text-wrap: pretty;
+}
+
+.pl-subtitle {
+  font-size: var(--pl-size-subtitle);
+  font-weight: var(--pl-weight-medium);
+  line-height: var(--pl-leading-subtitle);
+}
+
+.pl-body {
+  font-size: var(--pl-size-body);
+  font-weight: var(--pl-weight-regular);
+  line-height: var(--pl-leading-body);
+  max-width: var(--pl-measure);
+}
+
+/* El mono etiqueta y numera; nunca hace de titular. */
+.pl-mono {
+  font-family: var(--pl-font-mono);
+  font-size: var(--pl-size-mono);
+  font-weight: var(--pl-weight-regular);
+}
+
+.pl-eyebrow {
+  font-family: var(--pl-font-mono);
+  font-size: 11px;
+  color: var(--pl-ink-soft);
+}
+
+/* Nota al pie de módulo: comentario del sistema sobre sí mismo. */
+.pl-note {
+  font-family: var(--pl-font-note);
+  font-size: 11px;
+  line-height: var(--pl-leading-note);
+  color: var(--pl-ink-soft);
+}
+
+.pl-quiet {
+  color: var(--pl-ink-soft);
+}
+
+/* ── Marca ──────────────────────────────────────────────── */
+
+.pl-wordmark {
+  font-family: var(--pl-font-sans);
+  font-weight: var(--pl-weight-bold);
+  letter-spacing: var(--pl-tracking-display);
+  line-height: 1;
+}
+
+/* Cursor señal: el latido. Uno por vista. */
+.pl-cursor {
+  display: inline-block;
+  width: 0.42em;
+  height: 1em;
+  background: var(--pl-signal);
+  vertical-align: -0.12em;
+  animation: pl-blink var(--pl-blink) steps(1) infinite;
+}
+
+@keyframes pl-blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pl-cursor {
+    animation: none;
+  }
+  * {
+    transition-duration: 1ms !important;
+  }
+}
+
+/* ── Estructura ─────────────────────────────────────────── */
+
+.pl-page {
+  max-width: var(--pl-page-max);
+  margin-inline: auto;
+}
+
+.pl-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--pl-columns), 1fr);
+  gap: var(--pl-gutter);
+}
+
+/* Secciones separadas por filete, no por color. */
+.pl-rule {
+  border: 0;
+  border-top: var(--pl-border);
+  margin: 0;
+}
+
+.pl-rule--ink {
+  border-top-color: var(--pl-ink);
+}
+
+/* Superficie de tinta plena: terminal, pie de marca, captación. */
+.pl-ink-surface {
+  background: var(--pl-ink);
+  color: var(--pl-on-ink);
+}
+
+.pl-ink-surface a {
+  color: var(--pl-on-ink);
+}

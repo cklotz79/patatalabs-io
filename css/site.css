@@ -1,0 +1,549 @@
+/* patatalabs.io — maquetación, textura y movimiento
+   Se apoya en el sistema (styles.css). Aquí sólo va lo propio de la página.
+
+   Movimiento, según el sistema:
+   · el cursor parpadea a 1.1s, siempre; es el latido de la marca
+   · el texto entra tecleado en mono o por corte seco: nunca fundidos suaves
+   · transición = barrido de filete de 1px, 240ms, cubic-bezier(.2,.8,.2,1) */
+
+/* ══ Textura ═══════════════════════════════════════════════
+   Grano: ruido fractal SVG embebido, sin red ni peso.
+
+   La mezcla no puede ser la misma arriba y abajo. Sobre tinta,
+   `overlay` conserva la media y da ±40% de variación relativa:
+   grano fuerte y negro que sigue siendo negro. Sobre papel claro
+   `overlay` sólo mueve un 0.6% —invisible—, así que ahí el grano
+   va en mezcla normal, translúcido, y asienta el papel del blanco
+   elevado a algo más cercano al papel del sistema. */
+
+/* El tamaño de partícula importa más que la cantidad: a frecuencia
+   alta cada grano mide ~1px, en pantalla retina se promedia y sólo
+   se lee como un tono plano. Por eso el ruido se genera en un lienzo
+   pequeño y se tilea a 3×, igual que hex escala el suyo. El contraste
+   se ensancha con `slope 1.8 / intercept −0.4`, que deja la media en
+   0.5 intacta: más grano visible, mismo tono de papel. */
+
+:root {
+  --pl-grain-paper: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='g' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.62' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='1.8' intercept='-0.4'/%3E%3CfeFuncG type='linear' slope='1.8' intercept='-0.4'/%3E%3CfeFuncB type='linear' slope='1.8' intercept='-0.4'/%3E%3CfeFuncA type='discrete' tableValues='1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23g)' opacity='0.13'/%3E%3C/svg%3E");
+  --pl-grain-ink: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='g' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.62' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='1.8' intercept='-0.4'/%3E%3CfeFuncG type='linear' slope='1.8' intercept='-0.4'/%3E%3CfeFuncB type='linear' slope='1.8' intercept='-0.4'/%3E%3CfeFuncA type='discrete' tableValues='1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23g)' opacity='0.62'/%3E%3C/svg%3E");
+  /* Nube de fibra: ruido de baja frecuencia, tileado muy grande.
+     Es lo que separa «papel» de «ruido digital». */
+  --pl-mottle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='m' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.028' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='discrete' tableValues='1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23m)' opacity='0.07'/%3E%3C/svg%3E");
+  /* Tile = lienzo: sin ampliación, partícula de ~1.6px. Por debajo
+     de ~1.2px el grano se promedia en retina y desaparece; ese es
+     el suelo, y se baja subiendo `baseFrequency`, no el tamaño. */
+  --pl-grain-size: 120px 120px;
+  --pl-mottle-size: 900px 900px;
+}
+
+body {
+  background-color: var(--pl-paper-raised);
+  /* grano · fibra · viñeta de tinta · respiración entre los dos papeles */
+  background-image: var(--pl-grain-paper), var(--pl-mottle),
+    radial-gradient(125% 85% at 50% 4%, rgba(27, 26, 23, 0) 42%, rgba(27, 26, 23, 0.07) 100%),
+    linear-gradient(to left, var(--pl-paper), var(--pl-paper-raised) 45%, var(--pl-paper));
+  background-size: var(--pl-grain-size), var(--pl-mottle-size), cover, cover;
+  background-attachment: fixed;
+}
+
+/* La única superficie de tinta es el pie de marca, como pide el
+   sistema. El grano evita que el negro lea plano. */
+.site__foot-wrap {
+  background-color: var(--pl-ink);
+  background-image: var(--pl-grain-ink);
+  background-size: var(--pl-grain-size);
+  background-blend-mode: overlay;
+  color: var(--pl-on-ink);
+}
+
+.site {
+  max-width: var(--pl-page-max);
+  margin-inline: auto;
+}
+
+.site__section {
+  padding-inline: var(--pl-space-6);
+}
+
+/* ══ Cabecera ══════════════════════════════════════════════ */
+
+.site__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--pl-space-3);
+  padding-block: 20px;
+  border-bottom: var(--pl-border);
+}
+
+/* Bloqueo de marca: el tagline va siempre junto al logotipo,
+   como en el pie de marca y en la cartela de vídeo del sistema. */
+.site__brand {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+}
+
+.site__head .pl-wordmark {
+  font-size: 22px;
+}
+
+.site__tagline {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--pl-font-mono);
+  font-size: 12px;
+  color: var(--pl-ink-soft);
+}
+
+/* Reserva el ancho antes de teclear, para que nada salte */
+.site__typed {
+  display: inline-block;
+  white-space: pre;
+}
+
+.site__head-end {
+  display: flex;
+  align-items: center;
+  gap: var(--pl-space-3);
+}
+
+/* Selector de idioma: dos palabras y una barra, sin caja */
+.site__lang {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  font-family: var(--pl-font-mono);
+  font-size: 12px;
+  color: var(--pl-ink-soft);
+}
+
+.site__lang button {
+  border: 0;
+  background: none;
+  padding: 4px 0;
+  font: inherit;
+  color: var(--pl-ink-soft);
+  cursor: pointer;
+  border-bottom: var(--pl-hairline) solid transparent;
+  transition: color var(--pl-transition), border-color var(--pl-transition);
+}
+
+.site__lang button:hover {
+  color: var(--pl-ink);
+}
+
+.site__lang button[aria-pressed="true"] {
+  color: var(--pl-ink);
+  border-bottom-color: var(--pl-ink);
+}
+
+/* Enlace mono con filete que barre al pasar */
+.site__link {
+  position: relative;
+  font-family: var(--pl-font-mono);
+  font-size: 12px;
+  text-decoration: none;
+  padding-bottom: 3px;
+}
+
+.site__link::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: var(--pl-hairline);
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--pl-transition);
+}
+
+.site__link:hover::after,
+.site__link:focus-visible::after {
+  transform: scaleX(1);
+}
+
+/* ══ Portada ═══════════════════════════════════════════════ */
+
+.site__hero {
+  position: relative;
+  padding-block: 88px 72px;
+}
+
+/* La rejilla de 12 columnas del sistema, apenas insinuada y
+   desvaneciéndose hacia abajo. Textura estructural, no adorno. */
+.site__hero::before {
+  content: "";
+  position: absolute;
+  inset: 0 var(--pl-space-6);
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    to right,
+    var(--pl-line) 0 1px,
+    transparent 1px calc(100% / var(--hero-cols, 12))
+  );
+  background-size: calc(100% + 1px) 100%;
+  opacity: 0.38;
+  mask-image: linear-gradient(to bottom, #000 0%, transparent 72%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 72%);
+}
+
+/* 20ch parte el titular justo entre las dos frases */
+.site__hero h1 {
+  position: relative;
+  max-width: 20ch;
+}
+
+/* ══ Sesión de terminal ════════════════════════════════════
+   El cuerpo de la página es una sesión: se teclea el comando y
+   la respuesta se imprime. La cromo va en mono; el contenido de
+   la respuesta, en la sans de la marca — el mono nunca hace de
+   titular, ni siquiera dentro del terminal. */
+
+/* Separada del titular por filete, no por color */
+.term {
+  border-top: var(--pl-border);
+}
+
+.term__inner {
+  max-width: var(--pl-page-max);
+  margin-inline: auto;
+}
+
+.term__bar {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--pl-space-2);
+  padding: 13px var(--pl-space-6);
+  border-bottom: var(--pl-border);
+  font-family: var(--pl-font-mono);
+  font-size: 11px;
+  color: var(--pl-ink-soft);
+}
+
+.term__body {
+  padding: 44px var(--pl-space-6) 64px;
+  font-family: var(--pl-font-mono);
+  font-size: 13px;
+  line-height: 1.85;
+}
+
+.term__block + .term__block {
+  margin-top: 34px;
+}
+
+/* Corte seco: la línea aparece, no se funde. `opacity` sin
+   transición mantiene el texto en el árbol de accesibilidad. */
+.term__line {
+  opacity: 0;
+  transition: none;
+}
+
+.term__line.is-on {
+  opacity: 1;
+}
+
+.term__cmd {
+  color: var(--pl-ink);
+}
+
+.term__sign {
+  color: var(--pl-ink-soft);
+  margin-right: 9px;
+}
+
+.term__typed {
+  white-space: pre-wrap;
+}
+
+.term__out {
+  color: var(--pl-ink-soft);
+  max-width: 78ch;
+}
+
+.term__reply a {
+  color: var(--pl-ink);
+  text-decoration: none;
+  border-bottom: var(--pl-hairline) solid var(--pl-line);
+  padding-bottom: 2px;
+  transition: border-color var(--pl-transition);
+}
+
+.term__reply a:hover,
+.term__reply a:focus-visible {
+  color: var(--pl-ink);
+  border-bottom-color: var(--pl-ink);
+}
+
+/* Traza del pipeline: los nodos en tinta, las flechas en gris */
+.term__flow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 10px;
+  color: var(--pl-ink);
+}
+
+.term__flow i {
+  font-style: normal;
+  color: var(--pl-ink-soft);
+}
+
+/* Pares clave/valor alineados, como la salida de un comando */
+.term__kv {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 0 16px;
+  color: var(--pl-ink-soft);
+  max-width: 78ch;
+}
+
+.term__kv > span:first-child {
+  color: var(--pl-ink);
+}
+
+/* Respuesta con contenido: el terminal imprime tipografía de marca */
+.term__answer {
+  display: flex;
+  gap: 22px;
+  margin-top: 12px;
+}
+
+.term__tag {
+  flex: none;
+  color: var(--pl-ink-soft);
+  line-height: 1.6;
+}
+
+.term__answer h2 {
+  font-family: var(--pl-font-sans);
+  font-size: clamp(20px, 2vw, 26px);
+  font-weight: var(--pl-weight-bold);
+  letter-spacing: var(--pl-tracking-tight);
+  line-height: 1.12;
+}
+
+.term__answer p {
+  margin-top: 8px;
+  font-family: var(--pl-font-sans);
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--pl-ink-soft);
+  max-width: 58ch;
+}
+
+/* Un solo cursor encendido por vez: es la única señal en pantalla.
+   Va como pseudoelemento, así sigue al texto mientras se teclea y
+   luego descansa al final de la respuesta, como en un terminal. */
+.term__line.is-caret::after {
+  content: "";
+  display: inline-block;
+  width: 0.5em;
+  height: 1em;
+  margin-left: 5px;
+  background: var(--pl-signal);
+  vertical-align: -0.14em;
+  animation: pl-blink var(--pl-blink) steps(1) infinite;
+}
+
+.term__answer.is-caret::after {
+  display: none;
+}
+
+/* ══ Pie ═══════════════════════════════════════════════════ */
+
+.site__foot-wrap {
+  border-top: var(--pl-border);
+}
+
+.site__foot {
+  padding: var(--pl-space-6);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--pl-space-4) var(--pl-space-8);
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.site__foot-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.site__foot-brand .pl-mono {
+  font-size: 11px;
+  color: var(--pl-on-ink-soft);
+}
+
+.site__foot .pl-wordmark {
+  font-size: clamp(26px, 3vw, 34px);
+}
+
+.site__contact .pl-mono {
+  font-size: 11px;
+  color: var(--pl-on-ink-soft);
+}
+
+.site__contact {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.site__mail {
+  font-size: clamp(22px, 2.4vw, 32px);
+  font-weight: var(--pl-weight-bold);
+  letter-spacing: var(--pl-tracking-title);
+  line-height: 1;
+  text-decoration: none;
+  color: var(--pl-on-ink);
+  padding-bottom: 4px;
+  border-bottom: var(--pl-hairline) solid transparent;
+  transition: border-color var(--pl-transition);
+}
+
+.site__mail:hover,
+.site__mail:focus-visible {
+  color: var(--pl-on-ink);
+  border-bottom-color: var(--pl-on-ink);
+}
+
+.site__legal {
+  border-top: var(--pl-hairline) solid var(--pl-on-ink-faint);
+  padding: 16px var(--pl-space-6);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--pl-space-2) var(--pl-space-3);
+  justify-content: space-between;
+  font-family: var(--pl-font-mono);
+  font-size: 11px;
+  color: var(--pl-on-ink-soft);
+}
+
+/* ══ Movimiento ════════════════════════════════════════════
+   Corte seco: el titular se descubre con un barrido de borde duro.
+   El holgado de −0.2em evita que el recorte muerda astas y colas
+   cuando el interlineado es menor que 1. */
+
+[data-reveal] {
+  clip-path: inset(-0.2em 100% -0.2em -0.2em);
+  transition: clip-path 240ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition-delay: var(--d, 0ms);
+}
+
+[data-reveal].is-in {
+  clip-path: inset(-0.2em -0.2em -0.2em -0.2em);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    transition: none;
+    clip-path: none;
+  }
+  .term__line.is-caret::after {
+    animation: none;
+  }
+}
+
+/* ══ Respuesta ═════════════════════════════════════════════ */
+
+@media (max-width: 900px) {
+  /* `fixed` da saltos en Safari iOS: el grano se ancla al documento */
+  body {
+    background-attachment: scroll;
+  }
+
+  .site__section,
+  .term__bar,
+  .term__body,
+  .site__foot,
+  .site__legal {
+    padding-inline: var(--pl-space-3);
+  }
+  .site__hero {
+    padding-block: 56px 48px;
+    /* 12 columnas en un móvil leen como rayado, no como rejilla */
+    --hero-cols: 6;
+  }
+  .site__hero::before {
+    inset: 0 var(--pl-space-3);
+  }
+  .term__body {
+    font-size: 12px;
+  }
+  .term__answer {
+    gap: 14px;
+  }
+}
+
+@media (max-width: 620px) {
+  .site__hero h1 {
+    font-size: clamp(34px, 10vw, 56px);
+  }
+
+  /* La cabecera se queda con la marca y el idioma: el correo ya está
+     en la sesión y en el pie. */
+  .site__head .site__link {
+    display: none;
+  }
+
+  .site__brand {
+    gap: 10px;
+  }
+
+  .site__tagline {
+    font-size: 11px;
+  }
+
+  /* El terminal no hace scroll horizontal: la respuesta se reajusta */
+  .term__out {
+    max-width: none;
+  }
+
+  /* No caben dos columnas: la clave pasa encima del valor */
+  .term__kv {
+    grid-template-columns: 1fr;
+    gap: 0;
+    margin-bottom: 8px;
+  }
+
+  .site__legal {
+    gap: 6px var(--pl-space-2);
+  }
+}
+
+/* Móvil estrecho: la marca se queda mínima, sin tagline, como pide
+   el sistema para formatos pequeños. */
+@media (max-width: 400px) {
+  .site__tagline {
+    display: none;
+  }
+  .site__section,
+  .term__bar,
+  .term__body,
+  .site__foot,
+  .site__legal {
+    padding-inline: var(--pl-space-2);
+  }
+  .term__body {
+    font-size: 11.5px;
+    padding-block: 32px 44px;
+  }
+  .term__answer {
+    gap: 12px;
+  }
+  .term__answer h2 {
+    font-size: 19px;
+  }
+  .site__foot {
+    gap: var(--pl-space-3);
+    padding-block: var(--pl-space-4);
+  }
+  .site__legal {
+    justify-content: flex-start;
+  }
+}
