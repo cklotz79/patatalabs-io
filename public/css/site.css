@@ -46,15 +46,11 @@ body {
   background-attachment: fixed;
 }
 
-/* La única superficie de tinta es el pie de marca, como pide el
-   sistema. El grano evita que el negro lea plano. */
-.site__foot-wrap {
-  background-color: var(--pl-ink);
-  background-image: var(--pl-grain-ink);
-  background-size: var(--pl-grain-size);
-  background-blend-mode: overlay;
-  color: var(--pl-on-ink);
-}
+/* La página no tiene ninguna superficie de tinta: el pie comparte el
+   papel del resto y se separa por filete, no por color. Es un desvío
+   consciente del sistema, que pide cerrar toda página con el pie en
+   tinta plena. `--pl-grain-ink` queda disponible para cuando haga
+   falta una superficie negra. */
 
 .site {
   max-width: var(--pl-page-max);
@@ -375,7 +371,7 @@ body {
 
 .site__foot-brand .pl-mono {
   font-size: 11px;
-  color: var(--pl-on-ink-soft);
+  color: var(--pl-ink-soft);
 }
 
 .site__foot .pl-wordmark {
@@ -384,7 +380,7 @@ body {
 
 .site__contact .pl-mono {
   font-size: 11px;
-  color: var(--pl-on-ink-soft);
+  color: var(--pl-ink-soft);
 }
 
 .site__contact {
@@ -400,7 +396,7 @@ body {
   letter-spacing: var(--pl-tracking-title);
   line-height: 1;
   text-decoration: none;
-  color: var(--pl-on-ink);
+  color: var(--pl-ink);
   padding-bottom: 4px;
   border-bottom: var(--pl-hairline) solid transparent;
   transition: border-color var(--pl-transition);
@@ -408,12 +404,12 @@ body {
 
 .site__mail:hover,
 .site__mail:focus-visible {
-  color: var(--pl-on-ink);
-  border-bottom-color: var(--pl-on-ink);
+  color: var(--pl-ink);
+  border-bottom-color: var(--pl-ink);
 }
 
 .site__legal {
-  border-top: var(--pl-hairline) solid var(--pl-on-ink-faint);
+  border-top: var(--pl-border);
   padding: 16px var(--pl-space-6);
   display: flex;
   flex-wrap: wrap;
@@ -421,7 +417,7 @@ body {
   justify-content: space-between;
   font-family: var(--pl-font-mono);
   font-size: 11px;
-  color: var(--pl-on-ink-soft);
+  color: var(--pl-ink-soft);
 }
 
 /* ══ Movimiento ════════════════════════════════════════════
