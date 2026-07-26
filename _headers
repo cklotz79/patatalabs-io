@@ -1,0 +1,28 @@
+# Cabeceras para Cloudflare Pages.
+# La política sirve exactamente lo que la página usa y nada más:
+# los estilos vienen de aquí y de Google Fonts, las tipografías de
+# gstatic, las imágenes son data-URI (el grano y el favicon) y el
+# único script es propio. No hay <script> en línea ni handlers on*.
+
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; object-src 'none'
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(), microphone=(), camera=(), payment=()
+
+# El HTML se revalida siempre: los despliegues deben verse al instante.
+/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/index.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+# CSS y JS no llevan hash en el nombre, así que la caché es corta a
+# propósito: 10 minutos da visitas repetidas rápidas sin dejar
+# versiones viejas dando vueltas tras un push.
+/css/*
+  Cache-Control: public, max-age=600
+
+/js/*
+  Cache-Control: public, max-age=600

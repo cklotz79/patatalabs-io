@@ -24,8 +24,17 @@ y Fragment Mono.
 
 ## Despliegue
 
-Hosting estático apuntando a la raíz del repositorio. No hay comando de build ni
-directorio de salida.
+Cloudflare Pages, conectado a este repositorio. Cada push a `main` publica.
+
+| Ajuste | Valor |
+| --- | --- |
+| Framework preset | None |
+| Build command | *(vacío)* |
+| Build output directory | `/` |
+| Root directory | `/` |
+
+No hay comando de build ni directorio de salida: el repositorio se sirve tal
+cual. `_headers` define la política de seguridad de contenido y la caché.
 
 ## Idioma
 
