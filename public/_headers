@@ -1,11 +1,15 @@
-# Cabeceras para Cloudflare Pages.
+# Cabeceras para Cloudflare Workers (static assets).
 # La política sirve exactamente lo que la página usa y nada más:
 # los estilos vienen de aquí y de Google Fonts, las tipografías de
-# gstatic, las imágenes son data-URI (el grano y el favicon) y el
-# único script es propio. No hay <script> en línea ni handlers on*.
+# gstatic, las imágenes son data-URI (el grano y el favicon) y los
+# scripts son propios. No hay <script> en línea ni handlers on*.
+#
+# La única excepción es Cloudflare Web Analytics: Cloudflare inyecta
+# su baliza en el HTML al servirlo. Se carga de static.cloudflareinsights.com
+# y envía las métricas a cloudflareinsights.com. Sin cookies.
 
 /*
-  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; object-src 'none'
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://cloudflareinsights.com; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; object-src 'none'
   X-Content-Type-Options: nosniff
   X-Frame-Options: DENY
   Referrer-Policy: strict-origin-when-cross-origin
