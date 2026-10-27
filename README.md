@@ -12,8 +12,6 @@ public/                                                     lo único que se sir
         site.css                                            maquetación y movimiento
   js/   site.js                                             sesión de terminal e idioma
         constellation.js                                    sin usar
-        hairline/  kernel.js · fichero.js                   figura Hairline, tal cual sale de la skill
-                   host.js                                  la monta en la home
 ```
 
 ## Desarrollo
@@ -27,22 +25,6 @@ python3 -m http.server 8000 --directory public
 
 Requiere salida a `fonts.googleapis.com` para Schibsted Grotesk, JetBrains Mono
 y Fragment Mono.
-
-La figura del fichero se carga como módulo, y los navegadores no cargan módulos
-desde `file://`: para verla en local hay que servir la carpeta, no abrir el
-archivo.
-
-## La figura
-
-`$ patata retrieve` muestra un fichero de biblioteca archivado por significado:
-los cajones más cercanos a la consulta se abren, el más próximo más que ninguno.
-Está hecha con [Hairline](https://github.com/lucasmarkes/hairline), de Lucas
-Marques, bajo licencia MIT: el aviso va en `public/js/hairline/LICENSE`.
-`kernel.js` y `fichero.js` se copian sin cambios; `host.js` hace en la página lo
-que el banco de pruebas del paquete hace en la suya —montarla, traducir la
-lectura y dar una sola vuelta del recorrido cuando la sesión la imprime—.
-El tema sale de las variables públicas `--hairline-*`, fijadas en `site.css`
-con los tokens del sistema.
 
 ## Despliegue
 
