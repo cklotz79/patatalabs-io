@@ -287,6 +287,48 @@ body {
   color: var(--pl-ink-soft);
 }
 
+/* Figura Hairline: el fichero de embeddings, impreso como salida de la
+   sesión. El marco es un filete, como el componente de imagen del sistema;
+   la lectura va en la esquina, fuera del dibujo (regla 10 de Hairline). */
+.term__figure {
+  position: relative;
+  max-width: 560px;
+  margin: 14px 0 12px;
+  border: var(--pl-border);
+
+  /* El tema del kernel, leído en tokens del sistema. Son las variables
+     públicas de Hairline: el kernel no se toca. El plato toma el papel del
+     sistema para que los sólidos se lean como objetos sobre la página. */
+  --hairline-plate: var(--pl-paper);
+  --hairline-hi: var(--pl-ink);
+  --hairline-edge: color-mix(in srgb, var(--pl-ink-soft) 55%, var(--pl-line));
+  --hairline-mid: color-mix(in srgb, var(--pl-ink-soft) 38%, var(--pl-line));
+  --hairline-lo: color-mix(in srgb, var(--pl-ink-soft) 28%, var(--pl-line));
+}
+
+.term__stage > svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* El punto brillante de la marca es la señal: la única de ese bloque, por
+   eso el bloque lleva data-nocaret y el cursor de la sesión se apaga ahí. */
+.term__stage > svg .dot:not(.m):not(.off) {
+  fill: var(--pl-signal);
+}
+
+.term__read {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  font-family: var(--pl-font-mono);
+  font-size: 11px;
+  color: var(--pl-ink);
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+}
+
 /* Pares clave/valor alineados, como la salida de un comando */
 .term__kv {
   display: grid;
