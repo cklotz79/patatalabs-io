@@ -8,6 +8,8 @@ wrangler.jsonc                                              configuración de Wo
 public/                                                     lo único que se sirve
   index.html
   _headers                                                  seguridad y caché
+  favicon.svg · favicon.ico · apple-touch-icon.png          favicon
+  site.webmanifest · icons/                                 iconos para Android
   css/  tokens.css · base.css · components.css · styles.css sistema de diseño
         site.css                                            maquetación y movimiento
   js/   site.js                                             sesión de terminal e idioma

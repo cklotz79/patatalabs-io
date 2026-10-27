@@ -1,7 +1,7 @@
 # Cabeceras para Cloudflare Workers (static assets).
 # La política sirve exactamente lo que la página usa y nada más:
 # los estilos vienen de aquí y de Google Fonts, las tipografías de
-# gstatic, las imágenes son data-URI (el grano y el favicon) y los
+# gstatic, las imágenes son data-URI (el grano) o propias (los iconos) y los
 # scripts son propios. No hay <script> en línea ni handlers on*.
 #
 # La única excepción es Cloudflare Web Analytics: Cloudflare inyecta
