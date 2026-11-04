@@ -24,7 +24,9 @@
 
 # CSS y JS no llevan hash en el nombre, así que la caché es corta a
 # propósito: 10 minutos da visitas repetidas rápidas sin dejar
-# versiones viejas dando vueltas tras un push.
+# versiones viejas dando vueltas tras un push. Si un cambio de HTML
+# depende de CSS o JS nuevo, sube el ?v= de su enlace en index.html:
+# si no, durante esos 10 minutos alguien puede ver HTML nuevo con CSS viejo.
 /css/*
   Cache-Control: public, max-age=600
 
