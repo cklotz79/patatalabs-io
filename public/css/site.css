@@ -204,13 +204,13 @@ body {
 }
 
 /* El titular llena el ancho de la rejilla. Se mide en unidades de
-   contenedor para que «Herramientas nuevas.» toque los dos bordes;
-   en teléfono manda «Herramientas», que queda sola en su línea. */
+   contenedor para que «software con IA.» y su cursor toquen los dos
+   bordes; en teléfono manda «Construimos», que llena su línea. */
 .hero__title {
   position: relative;
   z-index: 1;
   margin-left: -0.04em;
-  font-size: 15.6cqi;
+  font-size: 16.8cqi;
   font-weight: var(--pl-weight-bold);
   letter-spacing: var(--pl-tracking-display);
   line-height: 0.92;
@@ -220,25 +220,19 @@ body {
   display: block;
 }
 
-/* Desde tableta, «Herramientas nuevas.» y su cursor van en una línea
+/* Desde tableta, «software con IA.» y su cursor van en una línea
    y terminan en el borde derecho de la columna 12. */
 @media (min-width: 600px) {
   .hero__title {
-    font-size: 9.5cqi;
+    font-size: 12.5cqi;
   }
   .hero__l2 {
     white-space: nowrap;
   }
-}
-
-/* En inglés las dos líneas son la mitad de largas: el titular crece
-   hasta que «New tools.» y su cursor tocan el borde, en todo ancho. */
-:lang(en) .hero__title {
-  font-size: 19cqi;
-}
-
-:lang(en) .hero__l2 {
-  white-space: nowrap;
+  /* «software with AI.» es un poco más larga */
+  :lang(en) .hero__title {
+    font-size: 12cqi;
+  }
 }
 
 /* La bajada se asienta en papel limpio: la rejilla se ve arriba, detrás
@@ -558,8 +552,12 @@ body {
   color: var(--pl-on-ink-soft);
 }
 
-.ft__head + .ft__cmd {
+.ft__lead {
   margin-top: var(--pl-space-8);
+  font-size: clamp(19px, 1.9vw, 28px);
+  font-weight: var(--pl-weight-medium);
+  letter-spacing: var(--pl-tracking-flat);
+  line-height: 1.3;
 }
 
 .ft__mail {
