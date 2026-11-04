@@ -81,6 +81,7 @@ body {
 }
 
 .site__head .pl-wordmark {
+  position: relative;
   font-size: 22px;
 }
 
@@ -109,13 +110,14 @@ body {
 .site__lang {
   display: flex;
   align-items: baseline;
-  gap: 6px;
+  gap: 10px;
   font-family: var(--pl-font-mono);
   font-size: 12px;
   color: var(--pl-ink-soft);
 }
 
 .site__lang button {
+  position: relative;
   border: 0;
   background: none;
   padding: 4px 0;
@@ -159,6 +161,34 @@ body {
 .site__link:hover::after,
 .site__link:focus-visible::after {
   transform: scaleX(1);
+}
+
+/* ══ Áreas táctiles ════════════════════════════════════════
+   Todo lo que se toca llega a 44 px de alto. El área crece con un
+   pseudoelemento transparente, así el dibujo no cambia. */
+
+.site__lang button::before,
+.site__head .pl-wordmark::before,
+.site__link::before,
+.site__mail::before,
+.term__reply a::before {
+  content: "";
+  position: absolute;
+}
+
+/* 28 px de alto + 2 × 9; el ancho no llega al vecino */
+.site__lang button::before {
+  inset: -9px -12px;
+}
+
+.site__head .pl-wordmark::before {
+  inset: -11px -4px;
+}
+
+.site__link::before,
+.site__mail::before,
+.term__reply a::before {
+  inset: -13px -4px;
 }
 
 /* ══ Portada ═══════════════════════════════════════════════ */
@@ -219,15 +249,35 @@ body {
   color: var(--pl-ink-soft);
 }
 
+/* El mono de comandos y datos no baja de 13 px en ningún ancho.
+   --term-pad lo usan también los filetes entre actos para ir de borde
+   a borde de la sesión. */
 .term__body {
-  padding: 44px var(--pl-space-6) 64px;
+  --term-pad: var(--pl-space-6);
+  padding: 44px var(--term-pad) 64px;
   font-family: var(--pl-font-mono);
   font-size: 13px;
   line-height: 1.85;
 }
 
-.term__block + .term__block {
-  margin-top: 34px;
+/* Tres actos: 32 px entre bloques de un acto; entre actos, más aire y
+   un filete a todo el ancho. Cada acto abre con un comentario de shell. */
+.term__block + .term__block,
+.term__pillars + .term__block {
+  margin-top: 32px;
+}
+
+.term__act + .term__act {
+  margin-top: 64px;
+  margin-inline: calc(-1 * var(--term-pad));
+  padding: 32px var(--term-pad) 0;
+  border-top: var(--pl-border);
+}
+
+.term__act-label {
+  margin-bottom: 24px;
+  font-size: 12px;
+  color: var(--pl-ink);
 }
 
 /* Corte seco: la línea aparece, no se funde. `opacity` sin
@@ -254,12 +304,36 @@ body {
   white-space: pre-wrap;
 }
 
+/* Todo lo que hay que leer va en tinta: el gris del sistema sobre el
+   papel con grano queda bajo 4,5:1. El gris se reserva para signos y
+   números que acompañan ($, 01, flechas). */
 .term__out {
-  color: var(--pl-ink-soft);
+  color: var(--pl-ink);
   max-width: 78ch;
 }
 
+/* Las respuestas que dicen el mensaje van en la sans, como texto corrido
+   del sistema (16 → 19 px). Una letra media de esta sans mide ~0,43 em:
+   29 em son unos 67 caracteres por línea a cualquier cuerpo. El ch no
+   sirve aquí, porque el 0 de la fuente es ancho. */
+.term__say {
+  font-family: var(--pl-font-sans);
+  font-size: clamp(16px, 13.3px + 0.4vw, 19px);
+  line-height: 1.5;
+  letter-spacing: var(--pl-tracking-flat);
+  max-width: 29em;
+}
+
+.term__cmd + .term__say {
+  margin-top: 6px;
+}
+
+.term__say + .term__say {
+  margin-top: 0.6em;
+}
+
 .term__reply a {
+  position: relative;
   color: var(--pl-ink);
   text-decoration: none;
   border-bottom: var(--pl-hairline) solid var(--pl-line);
@@ -273,61 +347,77 @@ body {
   border-bottom-color: var(--pl-ink);
 }
 
-/* Traza del pipeline: los nodos en tinta, las flechas en gris */
-.term__flow {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 0 10px;
-  color: var(--pl-ink);
+/* Traza del pipeline: seis celdas numeradas, cada una bajo un filete en
+   tinta. Dos por fila en teléfono, tres en tableta, seis desde 900 px. */
+.term__flow ol {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px var(--pl-gutter);
+  margin: 14px 0 18px;
+  padding: 0;
+  list-style: none;
 }
 
-.term__flow i {
-  font-style: normal;
+.term__flow li {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-top: 10px;
+  border-top: var(--pl-border-ink);
+  font-size: 14px;
+  line-height: 1.3;
+}
+
+.term__flow-n {
+  font-size: 11px;
   color: var(--pl-ink-soft);
 }
 
-/* Pares clave/valor alineados, como la salida de un comando */
+/* Pares clave/valor alineados, como la salida de un comando. La clave
+   se distingue por peso, no por color. */
 .term__kv {
   display: grid;
   grid-template-columns: 110px 1fr;
   gap: 0 16px;
-  color: var(--pl-ink-soft);
+  color: var(--pl-ink);
   max-width: 78ch;
 }
 
 .term__kv > span:first-child {
-  color: var(--pl-ink);
+  font-weight: 500;
 }
 
-/* Respuesta con contenido: el terminal imprime tipografía de marca */
+/* Pilares: el terminal imprime tipografía de marca. Van uno bajo otro
+   en teléfono y tableta, y en una fila de tres desde 900 px. El número
+   va arriba, así el titular queda alineado con su comando aun en una
+   columna angosta. */
 .term__answer {
-  display: flex;
-  gap: 22px;
-  margin-top: 12px;
+  margin-top: 14px;
 }
 
 .term__tag {
-  flex: none;
+  display: block;
+  margin-bottom: 12px;
   color: var(--pl-ink-soft);
-  line-height: 1.6;
+  line-height: 1;
 }
 
+/* Titular del sistema: 24 px en teléfono, 40 px a 1440 */
 .term__answer h2 {
   font-family: var(--pl-font-sans);
-  font-size: clamp(20px, 2vw, 26px);
+  font-size: clamp(24px, 18.4px + 1.5vw, 40px);
   font-weight: var(--pl-weight-bold);
-  letter-spacing: var(--pl-tracking-tight);
-  line-height: 1.12;
+  letter-spacing: var(--pl-tracking-title);
+  line-height: 1.08;
 }
 
 .term__answer p {
-  margin-top: 8px;
+  margin-top: 12px;
   font-family: var(--pl-font-sans);
-  font-size: 15px;
-  line-height: 1.55;
-  color: var(--pl-ink-soft);
-  max-width: 58ch;
+  font-size: clamp(16px, 13.3px + 0.4vw, 19px);
+  line-height: 1.5;
+  color: var(--pl-ink);
+  max-width: 46ch;
 }
 
 /* Un solo cursor encendido por vez: es la única señal en pantalla.
@@ -391,6 +481,7 @@ body {
 }
 
 .site__mail {
+  position: relative;
   font-size: clamp(22px, 2.4vw, 32px);
   font-weight: var(--pl-weight-bold);
   letter-spacing: var(--pl-tracking-title);
@@ -455,10 +546,12 @@ body {
 
   .site__section,
   .term__bar,
-  .term__body,
   .site__foot,
   .site__legal {
     padding-inline: var(--pl-space-3);
+  }
+  .term__body {
+    --term-pad: var(--pl-space-3);
   }
   .site__hero {
     padding-block: 56px 48px;
@@ -467,12 +560,6 @@ body {
   }
   .site__hero::before {
     inset: 0 var(--pl-space-3);
-  }
-  .term__body {
-    font-size: 12px;
-  }
-  .term__answer {
-    gap: 14px;
   }
 }
 
@@ -520,20 +607,13 @@ body {
   }
   .site__section,
   .term__bar,
-  .term__body,
   .site__foot,
   .site__legal {
     padding-inline: var(--pl-space-2);
   }
   .term__body {
-    font-size: 11.5px;
+    --term-pad: var(--pl-space-2);
     padding-block: 32px 44px;
-  }
-  .term__answer {
-    gap: 12px;
-  }
-  .term__answer h2 {
-    font-size: 19px;
   }
   .site__foot {
     gap: var(--pl-space-3);
@@ -541,5 +621,88 @@ body {
   }
   .site__legal {
     justify-content: flex-start;
+  }
+}
+
+/* ══ Anchos mayores: la sesión toma la retícula ════════════ */
+
+@media (min-width: 621px) {
+  .term__act + .term__act {
+    margin-top: 80px;
+  }
+  .term__flow ol {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* Los pilares en una fila de tres y la traza en una de seis */
+@media (min-width: 900px) {
+  .term__pillars {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: var(--pl-gutter);
+  }
+  .term__pillars > .term__block + .term__block {
+    margin-top: 0;
+  }
+  .term__flow ol {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}
+
+/* La retícula del sistema (12 columnas, canal de 24). Cada bloque es una
+   fila: el comando en el carril, la respuesta en su columna. De 1024 a
+   1279, carril de 4 y respuesta de 7; desde 1280, carril de 3 y
+   respuesta de 6. Los pilares (4 + 4 + 4) y la traza (6 × 2) van a todo
+   el ancho. */
+@media (min-width: 1024px) {
+  .term__act + .term__act {
+    margin-top: 96px;
+  }
+
+  .term__act > .term__block {
+    display: grid;
+    grid-template-columns: repeat(var(--pl-columns), minmax(0, 1fr));
+    column-gap: var(--pl-gutter);
+    align-items: start;
+  }
+
+  .term__act > .term__block > .term__line {
+    grid-column: 5 / span 7;
+  }
+
+  .term__act > .term__block > .term__cmd {
+    grid-column: 1 / span 4;
+    grid-row: 1 / span 12;
+  }
+
+  .term__cmd + .term__say {
+    margin-top: 0;
+  }
+
+  /* La traza: comando y lectura en la primera fila, las seis celdas
+     debajo y a todo el ancho */
+  .term__act > .term__block--trace > .term__cmd,
+  .term__act > .term__block--trace > .term__say {
+    grid-row: 1;
+  }
+  .term__act > .term__block--trace > .term__flow {
+    grid-row: 2;
+    grid-column: 1 / -1;
+  }
+  .term__flow ol {
+    margin: 22px 0 0;
+  }
+}
+
+@media (min-width: 1280px) {
+  .term__act > .term__block > .term__line {
+    grid-column: 4 / span 6;
+  }
+  .term__act > .term__block > .term__cmd {
+    grid-column: 1 / span 3;
+  }
+  .term__act > .term__block--trace > .term__flow {
+    grid-column: 1 / -1;
   }
 }
