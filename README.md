@@ -12,7 +12,7 @@ public/                                                     lo único que se sir
   site.webmanifest · icons/                                 iconos para Android
   css/  tokens.css · base.css · components.css · styles.css sistema de diseño
         site.css                                            maquetación y movimiento
-  js/   site.js                                             sesión de terminal e idioma
+  js/   site.js                                             cursor e idioma
         constellation.js                                    sin usar
 ```
 
@@ -57,10 +57,11 @@ filetes de 1px, cero radios, cero sombras, una sola señal. Los cuatro primeros
 archivos de `css/` son copia del sistema y no se editan aquí — los cambios se
 hacen en el sistema y se copian.
 
-El movimiento sigue las reglas del sistema y no las convenciones habituales de
-web: el texto entra tecleado en mono o por corte seco, nunca con fundidos, y las
-transiciones son barridos de filete de 240ms. Con `prefers-reduced-motion` todo
-aparece de una vez.
+La página es la traza del pipeline. Hay un solo cursor señal por vista y va
+donde va la lectura: el titular, las reglas, cada paso y el contacto. El
+movimiento sigue las reglas del sistema: nada de fundidos, y las transiciones
+son barridos de filete de 240ms. Con `prefers-reduced-motion` el cursor no
+parpadea y los filetes aparecen sin barrido.
 
 ---
 

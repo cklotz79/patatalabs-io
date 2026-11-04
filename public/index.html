@@ -16,7 +16,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="css/styles.css">
-<link rel="stylesheet" href="css/site.css?v=2026-11-03">
+<link rel="stylesheet" href="css/site.css?v=2026-11-04">
 <link rel="icon" href="favicon.ico" sizes="32x32">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -24,159 +24,154 @@
 </head>
 <body>
 
-<div class="site">
+<header class="hd wrap">
+  <div class="hd__brand">
+    <a class="pl-wordmark hd__mark" href="/">patata</a>
+    <span class="hd__tag">&gt; rethinking_tools</span>
+  </div>
+  <div class="hd__end">
+    <div class="hd__lang" role="group" aria-label="Idioma / Language">
+      <button type="button" data-lang-set="es" aria-pressed="true">es</button>
+      <span aria-hidden="true">/</span>
+      <button type="button" data-lang-set="en" aria-pressed="false">en</button>
+    </div>
+    <a class="hd__mail" href="mailto:info@patatalabs.io">info@patatalabs.io</a>
+  </div>
+</header>
 
-  <header class="site__section site__head">
-    <div class="site__brand">
-      <a class="pl-wordmark" href="/" style="text-decoration:none;">patata</a>
-      <span class="site__tagline">
-        <span class="site__typed" data-typed>&gt; rethinking_tools</span><span class="pl-cursor"></span>
-      </span>
+<main>
+
+  <section class="hero wrap station is-here" data-station>
+    <div class="hero__in">
+      <div class="hero__cols g" aria-hidden="true">
+        <span></span><span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span><span></span><span></span>
+      </div>
+
+      <h1 class="hero__title">
+        <span class="hero__l1" data-en="New rules.">Nuevas reglas.</span>
+        <span class="hero__l2"><span data-en="New tools.">Herramientas nuevas.</span><span class="pl-cursor" aria-hidden="true"></span></span>
+      </h1>
+
+      <div class="hero__foot g">
+        <p class="hero__lede" data-en="Artificial intelligence changed the rules: what can be automated, what it costs, how long it takes. We build the tools those new rules make possible, with the model built into the product's pipeline.">La inteligencia artificial cambió las reglas: qué se puede automatizar, cuánto cuesta, cuánto tarda. Construimos las herramientas que esas reglas hacen posibles, con el modelo integrado en el pipeline del producto.</p>
+        <dl class="hero__meta">
+          <div><dt>whoami</dt><dd>Patata Labs · <span lang="en">developer-led tech company</span></dd></div>
+          <div><dt>where</dt><dd data-en="Santiago, Chile · GMT−4">Santiago de Chile · GMT−4</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec wrap" aria-labelledby="como">
+    <div class="sec__head">
+      <span data-en="# how we work"># cómo trabajamos</span>
+      <span>01–03</span>
+    </div>
+    <h2 class="sec__title station" id="como" data-station><span data-en="Three working rules.">Tres reglas de trabajo.</span><span class="pl-cursor" aria-hidden="true"></span></h2>
+
+    <div class="rules g">
+      <article class="rule">
+        <span class="rule__n">01</span>
+        <h3 data-en="Old software doesn't adapt, it gets rebuilt">Lo viejo no se adapta, se rehace</h3>
+        <p data-en="A new rule doesn't fit an old interface. We start from the problem, not from the software that was already there.">Una regla nueva no cabe en una interfaz vieja. Partimos del problema, no del software que ya había.</p>
+      </article>
+      <article class="rule">
+        <span class="rule__n">02</span>
+        <h3 data-en="AI lives in the pipeline, not in a button">La IA va en el pipeline, no en un botón</h3>
+        <p data-en="The model is one more step in the flow: it takes context, calls tools and returns a verifiable result. It isn't a separate feature.">El modelo es un paso más del flujo: recibe contexto, llama herramientas y devuelve un resultado verificable. No es una función aparte.</p>
+      </article>
+      <article class="rule">
+        <span class="rule__n">03</span>
+        <h3 data-en="Every step stays visible">Cada paso queda a la vista</h3>
+        <p data-en="Every model call leaves a trace: input, tools used and output. Versioned, reversible, auditable.">Cada llamada al modelo deja traza: entrada, herramientas usadas y salida. Versionado, reversible, auditable.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="sec wrap" aria-labelledby="traza">
+    <div class="sec__head">
+      <span>$ patata pipeline --trace</span>
+      <span data-en="6 steps">6 pasos</span>
+    </div>
+    <div class="g sec__intro">
+      <h2 class="sec__title station" id="traza" data-station><span data-en="The pipeline, step by step.">El pipeline, paso a paso.</span><span class="pl-cursor" aria-hidden="true"></span></h2>
+      <p class="sec__lede" data-en="Every step is observable, retryable and replaceable on its own.">Cada paso es observable, reintentable y sustituible por separado.</p>
     </div>
 
-    <div class="site__head-end">
-      <div class="site__lang" role="group" aria-label="Idioma / Language">
-        <button type="button" data-lang-set="es" aria-pressed="true">es</button>
-        <span aria-hidden="true">/</span>
-        <button type="button" data-lang-set="en" aria-pressed="false">en</button>
-      </div>
-      <a class="site__link" href="mailto:info@patatalabs.io">info@patatalabs.io</a>
+    <ol class="trace">
+      <li class="step g station" data-station>
+        <span class="step__n">01</span>
+        <h3 class="step__name"><span data-en="intake">ingesta</span><span class="pl-cursor" aria-hidden="true"></span></h3>
+        <p class="step__what" data-en="In goes what the product already has: documents, tables, events.">Entra lo que el producto ya tiene: documentos, tablas, eventos.</p>
+        <p class="step__with" data-en="SQL and vector · queues · streaming">SQL y vectorial · colas · streaming</p>
+      </li>
+      <li class="step g station" data-station>
+        <span class="step__n">02</span>
+        <h3 class="step__name"><span data-en="context">contexto</span><span class="pl-cursor" aria-hidden="true"></span></h3>
+        <p class="step__what" data-en="The model gets what the task needs, not everything there is.">El modelo recibe lo que la tarea necesita, no todo lo que hay.</p>
+        <p class="step__with" data-en="RAG · embeddings · session memory">RAG · embeddings · memoria de sesión</p>
+      </li>
+      <li class="step g station" data-station>
+        <span class="step__n">03</span>
+        <h3 class="step__name"><span data-en="model">modelo</span><span class="pl-cursor" aria-hidden="true"></span></h3>
+        <p class="step__what" data-en="Chosen per task, and swapped without rebuilding the flow.">Se elige por tarea y se cambia sin rehacer el flujo.</p>
+        <p class="step__with" data-en="multi-provider · swappable per task">multiproveedor · intercambiable por tarea</p>
+      </li>
+      <li class="step g station" data-station>
+        <span class="step__n">04</span>
+        <h3 class="step__name"><span data-en="tools">herramientas</span><span class="pl-cursor" aria-hidden="true"></span></h3>
+        <p class="step__what" data-en="The model calls tools with set permissions and limits.">El modelo llama herramientas con permisos y límites fijados.</p>
+        <p class="step__with" data-en="tool-calling · MCP · bounded execution">tool-calling · MCP · ejecución acotada</p>
+      </li>
+      <li class="step g station" data-station>
+        <span class="step__n">05</span>
+        <h3 class="step__name"><span data-en="verification">verificación</span><span class="pl-cursor" aria-hidden="true"></span></h3>
+        <p class="step__what" data-en="The output is tested against known cases before moving on.">La salida se prueba contra casos conocidos antes de seguir.</p>
+        <p class="step__with" data-en="evals per release · observability">evals por release · observabilidad</p>
+      </li>
+      <li class="step g station" data-station>
+        <span class="step__n">06</span>
+        <h3 class="step__name"><span data-en="output">salida</span><span class="pl-cursor" aria-hidden="true"></span></h3>
+        <p class="step__what" data-en="A verifiable result, with its full trace.">Un resultado verificable, con su traza completa.</p>
+        <p class="step__with" data-en="versioned · reversible · auditable">versionado · reversible · auditable</p>
+      </li>
+    </ol>
+  </section>
+
+</main>
+
+<footer class="ft">
+  <div class="ft__in wrap">
+    <div class="ft__head">
+      <span data-en="# contact"># contacto</span>
     </div>
-  </header>
 
-  <main>
+    <p class="ft__cmd"><span class="ft__sign">$</span> patata contact</p>
+    <p class="ft__mail station" data-station><a href="mailto:info@patatalabs.io">info@patatalabs.io</a><span class="pl-cursor" aria-hidden="true"></span></p>
 
-    <section class="site__section site__hero">
-      <h1 class="pl-display" data-reveal style="--d:0ms;" data-en="New rules. New tools.">Nuevas reglas. Herramientas nuevas.</h1>
-    </section>
-
-    <section class="term" aria-label="Patata Labs">
-      <div class="term__inner">
-
-        <div class="term__bar">
-          <span>patata@santiago — ~/labs</span>
-          <span class="term__meta" data-en="session">sesión</span>
-        </div>
-
-        <div class="term__body">
-
-          <div class="term__act">
-            <p class="term__act-label" data-en="# what we do"># qué hacemos</p>
-
-            <div class="term__block" data-term>
-              <p class="term__line term__cmd" data-line><span class="term__sign">$</span><span class="term__typed" data-type>whoami</span></p>
-              <p class="term__line term__out" data-line data-en="Patata Labs · developer-led tech company · Santiago, Chile">Patata Labs · <span lang="en">developer-led tech company</span> · Santiago de Chile</p>
-            </div>
-
-            <div class="term__block" data-term>
-              <p class="term__line term__cmd" data-line><span class="term__sign">$</span><span class="term__typed" data-type data-en="patata --what-we-do">patata --que-hacemos</span></p>
-              <p class="term__line term__out term__say" data-line data-en="Artificial intelligence changed the rules: what can be automated, what it costs, how long it takes.">La inteligencia artificial cambió las reglas: qué se puede automatizar, cuánto cuesta, cuánto tarda.</p>
-              <p class="term__line term__out term__say" data-line data-en="We build the tools those new rules make possible, with the model built into the product's pipeline.">Construimos las herramientas que esas reglas hacen posibles, con el modelo integrado en el pipeline del producto.</p>
-            </div>
-          </div>
-
-          <div class="term__act">
-            <p class="term__act-label" data-en="# how we work"># cómo trabajamos</p>
-
-            <div class="term__pillars">
-              <div class="term__block" data-term>
-                <p class="term__line term__cmd" data-line><span class="term__sign">$</span><span class="term__typed" data-type data-en="patata explain --tools">patata explain --herramientas</span></p>
-                <div class="term__line term__answer" data-line>
-                  <span class="term__tag">01</span>
-                  <div>
-                    <h2 data-en="Old software doesn't adapt, it gets rebuilt">Lo viejo no se adapta, se rehace</h2>
-                    <p data-en="A new rule doesn't fit an old interface. We start from the problem, not from the software that was already there.">Una regla nueva no cabe en una interfaz vieja. Partimos del problema, no del software que ya había.</p>
-                  </div>
-                </div>
-              </div>
-              <div class="term__block" data-term>
-                <p class="term__line term__cmd" data-line><span class="term__sign">$</span><span class="term__typed" data-type>patata explain --pipeline</span></p>
-                <div class="term__line term__answer" data-line>
-                  <span class="term__tag">02</span>
-                  <div>
-                    <h2 data-en="AI lives in the pipeline, not in a button">La IA va en el pipeline, no en un botón</h2>
-                    <p data-en="The model is one more step in the flow: it takes context, calls tools and returns a verifiable result. It isn't a separate feature.">El modelo es un paso más del flujo: recibe contexto, llama herramientas y devuelve un resultado verificable. No es una función aparte.</p>
-                  </div>
-                </div>
-              </div>
-              <div class="term__block" data-term>
-                <p class="term__line term__cmd" data-line><span class="term__sign">$</span><span class="term__typed" data-type data-en="patata explain --criteria">patata explain --criterio</span></p>
-                <div class="term__line term__answer" data-line>
-                  <span class="term__tag">03</span>
-                  <div>
-                    <h2 data-en="Every step stays visible">Cada paso queda a la vista</h2>
-                    <p data-en="Every model call leaves a trace: input, tools used and output. Versioned, reversible, auditable.">Cada llamada al modelo deja traza: entrada, herramientas usadas y salida. Versionado, reversible, auditable.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="term__block term__block--trace" data-term>
-              <p class="term__line term__cmd" data-line><span class="term__sign">$</span><span class="term__typed" data-type>patata pipeline --trace</span></p>
-              <div class="term__line term__flow" data-line>
-                <ol>
-                  <li><span class="term__flow-n">01</span><span data-en="intake">ingesta</span></li>
-                  <li><span class="term__flow-n">02</span><span data-en="context">contexto</span></li>
-                  <li><span class="term__flow-n">03</span><span data-en="model">modelo</span></li>
-                  <li><span class="term__flow-n">04</span><span data-en="tools">herramientas</span></li>
-                  <li><span class="term__flow-n">05</span><span data-en="verification">verificación</span></li>
-                  <li><span class="term__flow-n">06</span><span data-en="output">salida</span></li>
-                </ol>
-              </div>
-              <p class="term__line term__out term__say" data-line data-en="Every step is observable, retryable and replaceable on its own.">Cada paso es observable, reintentable y sustituible por separado.</p>
-            </div>
-          </div>
-
-          <div class="term__act">
-            <p class="term__act-label" data-en="# details"># datos</p>
-
-            <div class="term__block" data-term>
-              <p class="term__line term__cmd" data-line><span class="term__sign">$</span><span class="term__typed" data-type>patata stack</span></p>
-              <div class="term__line term__kv" data-line><span>runtime</span><span>TypeScript · Python</span></div>
-              <div class="term__line term__kv" data-line><span data-en="models">modelos</span><span data-en="multi-provider, swappable per task">multiproveedor, intercambiables por tarea</span></div>
-              <div class="term__line term__kv" data-line><span data-en="agents">agentes</span><span data-en="tool-calling · MCP · bounded execution">tool-calling · MCP · ejecución acotada</span></div>
-              <div class="term__line term__kv" data-line><span data-en="context">contexto</span><span data-en="RAG · embeddings · session memory">RAG · embeddings · memoria de sesión</span></div>
-              <div class="term__line term__kv" data-line><span data-en="data">datos</span><span data-en="SQL and vector · queues · streaming">SQL y vectorial · colas · streaming</span></div>
-              <div class="term__line term__kv" data-line><span data-en="delivery">entrega</span><span data-en="CI/CD · IaC · observability and evals per release">CI/CD · IaC · observabilidad y evals por release</span></div>
-            </div>
-
-            <div class="term__block" data-term>
-              <p class="term__line term__cmd" data-line><span class="term__sign">$</span><span class="term__typed" data-type>patata where</span></p>
-              <p class="term__line term__out" data-line data-en="Santiago, Chile · −33.4489, −70.6693 · GMT−4">Santiago de Chile · −33.4489, −70.6693 · GMT−4</p>
-            </div>
-
-            <div class="term__block" data-term>
-              <p class="term__line term__cmd" data-line><span class="term__sign">$</span><span class="term__typed" data-type>patata contact</span></p>
-              <p class="term__line term__out term__reply" data-line><a href="mailto:info@patatalabs.io">info@patatalabs.io</a></p>
-            </div>
-          </div>
-
-        </div>
+    <div class="ft__data g">
+      <div>
+        <p class="ft__cmd"><span class="ft__sign">$</span> patata where</p>
+        <p class="ft__out" data-en="Santiago, Chile · −33.4489, −70.6693 · GMT−4">Santiago de Chile · −33.4489, −70.6693 · GMT−4</p>
       </div>
-    </section>
-
-  </main>
-
-  <footer class="site__foot-wrap">
-    <div class="site__foot">
-      <div class="site__foot-brand">
+      <div>
+        <p class="ft__cmd"><span class="ft__sign">$</span> patata stack</p>
+        <p class="ft__out">TypeScript · Python · CI/CD · IaC</p>
+      </div>
+      <div class="ft__brand">
         <span class="pl-wordmark">patata</span>
-        <span class="pl-mono">&gt; rethinking_tools</span>
-      </div>
-      <div class="site__contact">
-        <span class="pl-mono" data-en="contact">contacto</span>
-        <a class="site__mail" href="mailto:info@patatalabs.io">info@patatalabs.io</a>
+        <span class="ft__out">&gt; rethinking_tools</span>
       </div>
     </div>
-    <div class="site__legal">
-      <span>patatalabs.io</span>
-      <span data-en="Santiago, Chile">Santiago de Chile</span>
+
+    <div class="ft__legal">
       <span>© 2026 Patata Labs</span>
+      <span>patatalabs.io</span>
     </div>
-  </footer>
+  </div>
+</footer>
 
-</div>
-
-<script src="js/site.js"></script>
+<script src="js/site.js?v=2026-11-04"></script>
 </body>
 </html>
